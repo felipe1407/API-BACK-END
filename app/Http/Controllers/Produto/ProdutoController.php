@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProdutoController extends Controller
 {
-    public function register_products(Request $request){
+    public function register_product(Request $request){
             $fields = $request->validate([
                 'name_product' => 'required',
                 'description' => 'required',
@@ -23,9 +23,9 @@ class ProdutoController extends Controller
             
             return response([
                 'status' => true,
-                'message' => 'Usuário criado com sucesso'
+                'message' => 'Produto criado com sucesso'
             ], Response::HTTP_OK);
         }
-    
+            
     }
 
