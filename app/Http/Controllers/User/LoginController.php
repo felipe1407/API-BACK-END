@@ -45,11 +45,10 @@ class LoginController extends Controller
 
         ], Response::HTTP_OK);
         
+    }
 
-        
-
-        
-
-
+    public function check(Request $request){
+        $user = Auth::user();
+        dd($user);
     }
 }

@@ -20,9 +20,9 @@ class UserController extends Controller
         
         return response([
             'status' => true,
-            'message' => 'Usuário criado com sucesso'
+            'message' => 'Usuário cadastrado com sucesso'
         ], Response::HTTP_OK);
     }
 
-    
+
 }
