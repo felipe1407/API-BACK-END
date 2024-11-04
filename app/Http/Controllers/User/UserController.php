@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 class UserController extends Controller
 {
     public function register (Request $request) {
+        //  dd($request->all());
         $fields = $request->validate([
             'name' => 'required',
             'email' => 'required',

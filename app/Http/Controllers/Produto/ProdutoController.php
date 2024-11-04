@@ -11,21 +11,31 @@ class ProdutoController extends Controller
 {
     public function register_product(Request $request){
             $fields = $request->validate([
-                'name_product' => 'required',
-                'description' => 'required',
-                'category' => "required",
-                'price' => 'required',
-                'mark' =>  'required'
+                'products' => 'required|array',
+                'products.*.name_product' => 'required|string',
+                'products.*.description' => 'required|string',
+                'products.*.price' => 'required|numeric',
+                'products.*.mark' =>  'required|string',
                 
             ]);
             
-            $produto = Produto::create($fields);
+            $createdProducts = [];
+
+            
+
+             foreach ($fields['products'] as $productData) {
+            $produto = Produto::create($productData);
+            $createdProducts[] = $produto;
+        }
             
             return response([
                 'status' => true,
-                'message' => 'Produto criado com sucesso'
+                'message' => 'Produto criado com sucesso',
+                'data' => $createdProducts
             ], Response::HTTP_OK);
         }
+
+        
             
     }
 

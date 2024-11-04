@@ -12,7 +12,9 @@ class Produto extends Model
         'name_product',
         'description',
         'price',
-        'category',
-        'mark'
+        'mark',
+        'imagem',
+        'id_user',
+        'id_category'
     ];
 }
