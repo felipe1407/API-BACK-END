@@ -16,6 +16,8 @@ class ProdutoController extends Controller
                 'products.*.description' => 'required|string',
                 'products.*.price' => 'required|numeric',
                 'products.*.mark' =>  'required|string',
+                'products.*.id_user' => 'required|exists:users,id',
+                'products.*.id_category' => 'required|exists:categorias,id'
                 
             ]);
             
