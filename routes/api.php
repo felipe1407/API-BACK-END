@@ -18,6 +18,7 @@ Route::prefix('usuario')->group(function(){
     Route::get('check', [LoginController::class, 'check'])->middleware('auth:sanctum');
 });
 
+
 Route::prefix('produto')->group(function(){
     Route::post('register_products', [ProdutoController::class, 'register_product']);
     Route::post('categoria', [CategoriaController::class, 'categoria']);
