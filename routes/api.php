@@ -19,6 +19,7 @@ Route::prefix('usuario')->group(function(){
     Route::get('check', [LoginController::class, 'check'])->middleware('auth:sanctum');
     Route::get('users', [LoginController::class, 'show'])->middleware('auth:sanctum')->name('listUsers');
     Route::put('/update/{id}', [LoginController::class, 'update'])->middleware('auth:sanctum')->name('editUsers');
+    Route::delete('/delete/{id}', [LoginController::class, 'destroy'])->middleware('auth:sanctum')->name('deleteUsers');
 });
 
 
