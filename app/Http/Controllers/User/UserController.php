@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,8 +15,19 @@ class UserController extends Controller
         $fields = $request->validate([
             'name' => 'required',
             'email' => 'required',
-            'password' => 'required'
+            'password' => 'required',
+            'admin' => 'required'
         ]);
+        
+
+        if(User::where('email', request()->email)->exists()){
+            return response([
+                'status' => false,
+                'message' => 'Email já registrado.'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+
         
         $user = User::create($fields);
         

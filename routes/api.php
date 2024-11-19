@@ -16,6 +16,7 @@ Route::prefix('usuario')->group(function(){
     Route::post('register', [UserController::class, 'register']);
     Route::post('login', [LoginController::class, 'login']);
     Route::get('check', [LoginController::class, 'check'])->middleware('auth:sanctum');
+    Route::get('show', [LoginController::class, 'show'])->middleware('auth:sanctum')->name('listUsers');
 });
 
 
