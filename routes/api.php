@@ -6,6 +6,7 @@ use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 
 
 // Route::get('/user', function (Request $request) {
@@ -16,7 +17,8 @@ Route::prefix('usuario')->group(function(){
     Route::post('register', [UserController::class, 'register']);
     Route::post('login', [LoginController::class, 'login']);
     Route::get('check', [LoginController::class, 'check'])->middleware('auth:sanctum');
-    Route::get('show', [LoginController::class, 'show'])->middleware('auth:sanctum')->name('listUsers');
+    Route::get('users', [LoginController::class, 'show'])->middleware('auth:sanctum')->name('listUsers');
+    Route::put('/update/{id}', [LoginController::class, 'update'])->middleware('auth:sanctum')->name('editUsers');
 });
 
 

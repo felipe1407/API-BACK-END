@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
@@ -76,7 +77,7 @@ class LoginController extends Controller
     //         }
     //     }
 
-        public function show (User $user){
+        public function show (){
             if(!auth::user()->admin){
                 return response()->json([
                     'status' => false,
@@ -95,10 +96,43 @@ class LoginController extends Controller
             
         }
 
-    public function atualizarUser (Request $request){
-        $atualizarUser = $request->validate([
-            'email' => 'required',
-            'password' => 'required'
-        ]); 
-    }
-}
+        // public function edit($id){
+
+        // }
+
+    public function update (Request $request){
+       
+            $validator = Validator::make($request->all(),[
+                'id' => 'required|exists:users,id',
+                'name' => 'sometimes',
+                'email' => 'sometimes',
+                'admin' => 'sometimes|boolean'
+                ]); 
+
+               
+             
+
+                    if (Auth::user()->admin) {
+                        $user=User::find($request->id);
+
+                    if(!$user) {
+                        return response()->json([
+                            'status' => false,
+                            'message' => 'Usuário não encontrado.',
+                        ], Response::HTTP_NOT_FOUND, [], JSON_PRETTY_PRINT);
+                    }
+                    
+
+                        $user->update($request->only(['name', 'email', 'admin']));
+                    
+                }
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'Usuário atualizado com sucesso!',
+                    ], Response::HTTP_OK, [], JSON_PRETTY_PRINT);
+                
+                }
+                   
+                
+                }
+
