@@ -6,6 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Produto extends Model
 {
+    public function subCategoria()
+    {
+        return $this->belongsTo(SubCategoria::class, 'id_subcategoria');
+    }
+
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class, 'id_categoria');
+    }
+
     use HasFactory;
 
     protected $fillable = [
@@ -15,6 +25,7 @@ class Produto extends Model
         'mark',
         'imagem',
         'id_user',
-        'id_category'
+        'id_category',
+        'id_subCategory'
     ];
 }

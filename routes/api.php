@@ -24,9 +24,14 @@ Route::prefix('usuario')->group(function(){
 
 
 Route::prefix('produto')->group(function(){
-    Route::post('register_products', [ProdutoController::class, 'register_product']);
-    Route::post('categoria', [CategoriaController::class, 'categoria']);
-    Route::post('subCategoria', [CategoriaController::class, 'subCategoria']);
+    Route::post('register_products', [ProdutoController::class, 'register_product'])->middleware('auth:sanctum');
+    
+
    
 });
 
+Route::prefix('categoria')->group(function(){
+    Route::post('register', [CategoriaController::class, 'categoria'])->middleware('auth:sanctum');
+    Route::delete('/delete/{id}', [CategoriaController::class, 'destroy'])->middleware('auth:sanctum')->name('deleteCategoria');
+    Route::post('subCategoria', [CategoriaController::class, 'subCategoria'])->middleware('auth:sanctum');
+});

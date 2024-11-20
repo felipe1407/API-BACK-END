@@ -17,24 +17,33 @@ class ProdutoController extends Controller
                 'products.*.price' => 'required|numeric',
                 'products.*.mark' =>  'required|string',
                 'products.*.id_user' => 'required|exists:users,id',
-                'products.*.id_category' => 'required|exists:categorias,id'
+                'products.*.id_category' => 'required|exists:categorias,id',
+                'products.*.id_subCategory' => 'required|exists:sub_categorias,id'
                 
             ]);
+
+            
             
             $createdProducts = [];
 
             
 
              foreach ($fields['products'] as $productData) {
+                if(Produto::where('name_product',$productData['name_product'])->exists()){
+                    return response()->json([
+                        'status' => false,
+                        'message' =>'Produto"' . $productData['name_product'] . '" já registrado.'
+                    ], Response::HTTP_UNAUTHORIZED, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+                }
             $produto = Produto::create($productData);
             $createdProducts[] = $produto;
         }
             
-            return response([
+            return response()->json([
                 'status' => true,
-                'message' => 'Produto criado com sucesso',
+                'message' => 'Produtos criados com sucesso',
                 'data' => $createdProducts
-            ], Response::HTTP_OK);
+            ], Response::HTTP_OK, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         }
 
         
