@@ -67,7 +67,7 @@ class LoginController extends Controller
         }
     }
 
-    public function show()
+    public function show() //Deveria ser index
     {
         if (!auth::user()->admin) {
             return response()->json([
@@ -116,8 +116,9 @@ class LoginController extends Controller
         ], Response::HTTP_OK, [], JSON_PRETTY_PRINT);
     }
 
-    public function destroy(Request $request){
-        if (Auth::user()->admin){
+    public function destroy(Request $request)
+    {
+        if (Auth::user()->admin) {
             $user = User::find($request->id);
         }
 
@@ -128,7 +129,7 @@ class LoginController extends Controller
             ], Response::HTTP_NOT_FOUND, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         }
 
-        if($user->admin){
+        if ($user->admin) {
             return response()->json([
                 'status' => false,
                 'message' => 'Este usuário é um administrador e não pode ser excluído'
@@ -137,9 +138,9 @@ class LoginController extends Controller
 
         $user->delete();
 
-            return response()->json([
-                'status' => true,
-                'message' => 'Usuário excluído com sucesso'
-            ], Response::HTTP_OK, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        return response()->json([
+            'status' => true,
+            'message' => 'Usuário excluído com sucesso'
+        ], Response::HTTP_OK, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
 }

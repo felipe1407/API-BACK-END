@@ -3,21 +3,15 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Container\Attributes\Auth;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
-    public function register (Request $request) {
+    public function register (UserRequest $request) {
         //  dd($request->all());
-        $fields = $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            'admin' => 'required'
-        ]);
         
 
         if(User::where('email', request()->email)->exists()){
@@ -29,7 +23,13 @@ class UserController extends Controller
 
 
         
-        $user = User::create($fields);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password), 
+            'admin' => $request->admin,
+        ]);
+        
         
         return response([
             'status' => true,
