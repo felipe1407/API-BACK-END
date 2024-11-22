@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\Produto\CategoriaController;
 use App\Http\Controllers\Produto\ProdutoController;
 use App\Http\Controllers\User\LoginController;
@@ -37,3 +38,11 @@ Route::prefix('categoria')->group(function(){
     Route::delete('/delete/{id}', [CategoriaController::class, 'destroy'])->middleware('auth:sanctum')->name('deleteCategoria');
     Route::post('subCategoria', [CategoriaController::class, 'subCategoria'])->middleware('auth:sanctum');
 });
+
+Route::prefix('carrinho')->group(function(){
+    Route::get('/', [CarrinhoController::class, 'list_car'])->middleware('auth:sanctum');
+     Route::delete('/{id}', [CategoriaController::class, 'removeCar'])->middleware('auth:sanctum')->name('delete');
+     Route::post('/{id}', [CarrinhoController::class, 'addCar'])->middleware('auth:sanctum');
+});
+
+

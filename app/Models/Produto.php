@@ -16,6 +16,10 @@ class Produto extends Model
         return $this->belongsTo(Categoria::class, 'id_categoria');
     }
 
+    public function carrinho(){
+        return $this->hasMany(Carrinho::class, 'id_carrinho');
+    }
+
     use HasFactory;
 
     protected $fillable = [
