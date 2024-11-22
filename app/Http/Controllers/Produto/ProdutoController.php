@@ -126,7 +126,7 @@ class ProdutoController extends Controller
     //     }
     // }
 
-    public function update(Request $request, Produto $produto)
+    public function update(Request $request)
     {
 
         $validator = Validator::make($request->all(), [
@@ -151,12 +151,14 @@ class ProdutoController extends Controller
         }
 
             $produto = Produto::find($request->id);
+            
         if(!$produto) {
             return response()->json([
                 'status' => 'false',
                 'message' => 'Produto não encontrado'
             ], Response::HTTP_NOT_FOUND);
         }
+        
 
         $produto->update($request->all());
 
@@ -174,4 +176,34 @@ class ProdutoController extends Controller
         ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
+
+    public function destroy(Request $request) {
+        try{
+            if (Auth::user()->admin) {
+                $produto = Produto::find($request->id);
+           
+                //verificar se o produto existe - bad request
+            if(!$produto){
+                return response()->json([
+                    'status' => 'false',
+                    'messagem' => 'Produto não encontrado'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+            Produto::destroy($request->id);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Produto excluído com sucesso'
+            ], Response::HTTP_OK, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+        }
+        } catch(Exception $e){
+            return response()->json([
+                'status' => false,
+                'message' => 'Erro ao apagar produto',
+                'error' => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+    }
 }

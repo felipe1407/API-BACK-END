@@ -27,8 +27,8 @@ Route::prefix('produto')->group(function(){
     Route::post('register_products', [ProdutoController::class, 'register_product'])->middleware('auth:sanctum');
     Route::get('index', [ProdutoController::class, 'index'])->middleware('auth:sanctum');
     Route::get('/{produto}', [ProdutoController::class, 'show'])->middleware('auth:sanctum');
-    Route::put('/{produto}', [ProdutoController::class, 'update'])->middleware('auth:sanctum');
-
+    Route::put('/{id}', [ProdutoController::class, 'update'])->middleware('auth:sanctum');
+    Route::delete('/{id}', [ProdutoController::class, 'destroy'])->middleware('auth:sanctum');
    
 });
 
